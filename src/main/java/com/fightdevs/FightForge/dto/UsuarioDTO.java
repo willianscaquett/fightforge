@@ -15,5 +15,6 @@ public class UsuarioDTO {
     Date dataNascimento;
     char sexo;
     String nome;
+    String codigo;
     
 }

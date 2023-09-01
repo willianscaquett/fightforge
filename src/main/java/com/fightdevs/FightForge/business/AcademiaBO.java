@@ -8,7 +8,6 @@ import com.fightdevs.FightForge.repository.AcademiaRepository;
 import com.fightdevs.FightForge.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.webjars.NotFoundException;
 
 /**
@@ -16,7 +15,7 @@ import org.webjars.NotFoundException;
  * @author Willian Scaquett
  */
 @Service
-public class UsuarioBO {
+public class AcademiaBO {
 
     @Autowired
     AcademiaRepository academiaRepository;
@@ -25,24 +24,6 @@ public class UsuarioBO {
     UsuarioRepository usuarioRepository;
 
     public String createUsuario(UsuarioDTO usuarioDTO) throws NotFoundException {
-
-        Usuario usuario = new Usuario(usuarioDTO);
-
-        Academia academia = academiaRepository.findByCodigoAluno(usuarioDTO.getCodigo());
-        usuario.setTipoUsuario(TipoUsuario.ALUNO);
-
-        if (academia == null) {
-            academia = academiaRepository.findByCodigoProfessor(usuarioDTO.getCodigo());
-            usuario.setTipoUsuario(TipoUsuario.PROFESSOR);
-
-            if (academia == null) {
-                throw new NotFoundException("Código inválido");
-            }
-        }
-        
-        usuario.setAcademia(academia);
-
-        usuarioRepository.save(usuario);
 
         return "Sucesso";
     }

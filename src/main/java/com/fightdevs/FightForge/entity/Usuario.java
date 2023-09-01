@@ -1,11 +1,15 @@
 package com.fightdevs.FightForge.entity;
 
 import com.fightdevs.FightForge.dto.UsuarioDTO;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
 import lombok.Data;
@@ -38,6 +42,13 @@ public class Usuario {
 
     @Column(name = "NOME")
     private String nome;
+
+    @Column(name = "TIPOUSUARIO")
+    private TipoUsuario tipoUsuario;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idAcademia")
+    private Academia academia;
 
     public Usuario(UsuarioDTO usuarioDTO) {
         this.email = usuarioDTO.getEmail();
