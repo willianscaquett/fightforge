@@ -26,7 +26,7 @@ public class SwaggerConfiguration {
                                 + "Com esta api, os usuários poderão consultar informações sobre os produtos. <br> "
                                 + "Possibilitando a requisição de orçamentos dos produtos disponibilizados pela empresa.<br>"
                                 + "Para acessar repositorio do projeto acesse "
-                                + "<a target=\"_blank\" href=\"https://github.com/KaiqueQueiros%5C%5C%22 - Conectar a conta do Github Kaique> Queiros</a>"
+                                + "<a target=\"_blank\" href=\"https://github.com/KaiqueQueiros - Conectar a conta do Github Kaique> Queiros</a>"
                         ));
     }
 

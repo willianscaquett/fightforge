@@ -5,6 +5,7 @@ import com.fightdevs.FightForge.dto.UserTokenService;
 import com.fightdevs.FightForge.dto.UsuarioDTO;
 import com.fightdevs.FightForge.entity.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class UsuarioController {
     
     @PostMapping
     @Operation(summary = "Atraves desse endpoint os usuarios do sistema são criados", tags = "User")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<?> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         try {
             return ResponseEntity.ok(usuarioBO.createUsuario(usuarioDTO));
@@ -41,7 +43,6 @@ public class UsuarioController {
         }catch (Exception exception) {
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
-
     }
 
     

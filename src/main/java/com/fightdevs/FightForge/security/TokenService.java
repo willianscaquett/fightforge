@@ -21,8 +21,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("FightForge.API")
-                    .withSubject(user.getUsername())
-                    .withSubject(user.getId().toString())
+                    .withSubject(user.getEmail())
                     .withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRATE))
                     .sign(algorithm);
         } catch (JWTCreationException e) {
