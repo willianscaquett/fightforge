@@ -18,15 +18,16 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeHttpRequests()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-                .requestMatchers(HttpMethod.POST,"/usuario/login", "/usuario").permitAll()
-
-
-                .anyRequest().authenticated()
-                .and().addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        return  http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/usuario/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/usuario").hasRole("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.POST,"/aluno").hasAnyRole("ADMINISTRADOR","DONOACADEMIA")
+                        .anyRequest().authenticated())
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

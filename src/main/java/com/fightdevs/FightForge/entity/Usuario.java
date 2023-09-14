@@ -7,10 +7,8 @@ import com.fightdevs.FightForge.dto.UsuarioType;
 import com.fightdevs.FightForge.security.CustomGrantedAuthority;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.Date;
@@ -49,7 +47,7 @@ public class Usuario implements UserDetails {
     private String nome;
     @Column(name = "USUARIOTYPE")
     @Enumerated(EnumType.STRING)
-    private UsuarioType usuarioType;
+    private UsuarioType role;
 
     public Usuario(UsuarioDTO usuario) {
         this.email = usuario.getEmail();
@@ -57,13 +55,13 @@ public class Usuario implements UserDetails {
         this.dataNascimento = usuario.getDataNascimento();
         this.sexo = usuario.getSexo();
         this.nome = usuario.getNome();
-        this.usuarioType = usuario.getUsuarioType();
+        this.role = usuario.getUsuarioType();
     }
 
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new CustomGrantedAuthority("ROLE_" + usuarioType.toString()));
+        return List.of(new CustomGrantedAuthority("ROLE_" + role.toString()));
     }
 
     @Override
