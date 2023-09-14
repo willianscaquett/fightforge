@@ -1,0 +1,23 @@
+package com.fightdevs.FightForge.security;
+
+import com.fightdevs.FightForge.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserDetailService implements UserDetailsService {
+    @Autowired
+    private UsuarioRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (!userRepository.existsByEmail(username)) {
+            throw new UsernameNotFoundException("Usuário inexistente ou senha inválida");
+        }
+        return userRepository.findByEmail(username);
+    }
+}
+
