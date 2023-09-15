@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import com.fightdevs.FightForge.dto.UsuarioType;
+import com.fightdevs.FightForge.dto.TipoUsuario;
 import com.fightdevs.FightForge.security.CustomGrantedAuthority;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,9 +55,9 @@ public class Usuario implements UserDetails {
     @Column(name = "NOME")
     private String nome;
   
-    @Column(name = "USUARIOTYPE")
+    @Column(name = "TIPOUSUARIO")
     @Enumerated(EnumType.STRING)
-    private UsuarioType role;
+    private TipoUsuario tipo;
   
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "idAcademia")
@@ -74,7 +74,7 @@ public class Usuario implements UserDetails {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new CustomGrantedAuthority("ROLE_" + role.toString()));
+        return List.of(new CustomGrantedAuthority("ROLE_" + tipo.toString()));
     }
 
     @Override

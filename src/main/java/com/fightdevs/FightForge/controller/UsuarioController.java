@@ -3,7 +3,6 @@ package com.fightdevs.FightForge.controller;
 import com.fightdevs.FightForge.business.UsuarioBO;
 import com.fightdevs.FightForge.dto.UserTokenService;
 import com.fightdevs.FightForge.dto.UsuarioDTO;
-import com.fightdevs.FightForge.entity.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -32,7 +31,8 @@ public class UsuarioController {
         try {
             return ResponseEntity.ok(usuarioBO.createUsuario(usuarioDTO));
         } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
+            ex.printStackTrace();
+            return ResponseEntity.badRequest().body(ex);
         }
     }
 

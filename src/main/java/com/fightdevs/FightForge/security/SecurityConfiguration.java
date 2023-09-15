@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/usuario/login").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/usuario/login", "/usuario/cadastro", "/academia/cadastro").permitAll()
                         .requestMatchers(HttpMethod.POST,"/usuario").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.POST,"/aluno").hasAnyRole("ADMINISTRADOR","DONOACADEMIA")
                         .anyRequest().authenticated())

@@ -6,13 +6,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Willian Scaquett
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ACADEMIA")
 public class Academia {
@@ -21,14 +25,18 @@ public class Academia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
-    
+
     @Column(name = "NOME")
     private String nome;
-    
+
     @Column(name = "CODIGOALUNO")
     private String codigoAluno;
-    
+
     @Column(name = "CODIGOPROFESSOR")
     private String codigoProfessor;
+
+    public Academia(String nome) {
+        this.nome = nome;
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.fightdevs.FightForge.controller;
 
-import com.fightdevs.FightForge.dto.UsuarioDTO;
-import com.fightdevs.FightForge.entity.Academia;
+import com.fightdevs.FightForge.business.AcademiaBO;
+import com.fightdevs.FightForge.dto.AcademiaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AcademiaController {
 
     @Autowired
-    Academia academiaBO;
+    AcademiaBO academiaBO;
 
     @PostMapping("cadastro")
-    public ResponseEntity<?> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<?> createAcademia(@RequestBody AcademiaDTO academiaDTO) {
 
         try {
-            return ResponseEntity.ok(academiaBO.createEmpresa(usuarioDTO));
+            return ResponseEntity.ok(academiaBO.createAcademia(academiaDTO));
         } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }

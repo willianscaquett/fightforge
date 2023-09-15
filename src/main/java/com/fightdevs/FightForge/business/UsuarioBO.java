@@ -1,20 +1,19 @@
 package com.fightdevs.FightForge.business;
 
+import com.fightdevs.FightForge.dto.TipoUsuario;
 import com.fightdevs.FightForge.dto.UserTokenService;
 import com.fightdevs.FightForge.dto.UsuarioDTO;
 import com.fightdevs.FightForge.entity.Academia;
-import com.fightdevs.FightForge.entity.TipoUsuario;
 import com.fightdevs.FightForge.entity.Usuario;
 import com.fightdevs.FightForge.repository.AcademiaRepository;
 import com.fightdevs.FightForge.repository.UsuarioRepository;
 import com.fightdevs.FightForge.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
-import org.webjars.NotFoundException;
 import org.springframework.security.core.Authentication;
 
 /**
@@ -29,31 +28,32 @@ public class UsuarioBO {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
     @Autowired
     AuthenticationManager manager;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Autowired
     TokenService tokenService;
-    
+
     public String createUsuario(UsuarioDTO usuarioDTO) throws NotFoundException {
 
         Usuario usuario = new Usuario(usuarioDTO);
-        
-       
+
         Academia academia = academiaRepository.findByCodigoAluno(usuarioDTO.getCodigo());
-        usuario.setTipoUsuario(TipoUsuario.ALUNO);
+        usuario.setTipo(TipoUsuario.ALUNO);
 
         if (academia == null) {
             academia = academiaRepository.findByCodigoProfessor(usuarioDTO.getCodigo());
-            usuario.setTipoUsuario(TipoUsuario.PROFESSOR);
+            usuario.setTipo(TipoUsuario.PROFESSOR);
 
             if (academia == null) {
-                throw new NotFoundException("Código inválido");
+                throw new NotFoundException();
             }
         }
-        
+
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuario.setAcademia(academia);
 
@@ -61,7 +61,6 @@ public class UsuarioBO {
 
         return "Sucesso";
     }
-
 
     public String login(UserTokenService dto) {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.email(), dto.senha());

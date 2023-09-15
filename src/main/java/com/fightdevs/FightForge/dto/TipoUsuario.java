@@ -1,4 +1,4 @@
-package com.fightdevs.FightForge.entity;
+package com.fightdevs.FightForge.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
