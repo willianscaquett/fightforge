@@ -15,11 +15,6 @@ import java.util.Date;
  */
 @Data
 
-public class UsuarioDTO{
-    String email;
-    String senha;
-    Date dataNascimento;
-    char sexo;
+public class AcademiaDTO{
     String nome;
-    String codigo;
 }

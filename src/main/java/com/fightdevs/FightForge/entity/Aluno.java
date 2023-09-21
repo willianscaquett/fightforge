@@ -1,7 +1,6 @@
 package com.fightdevs.FightForge.entity;
 
 import com.fightdevs.FightForge.dto.AlunoDTO;
-import com.fightdevs.FightForge.dto.FaixaType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,9 +22,6 @@ public class Aluno {
     private double altura;
     @Column(name = "PESO")
     private double peso;
-    @Column(name = "FAIXA")
-    @Enumerated(EnumType.STRING)
-    private FaixaType faixa;
     @Column(name = "NOTAS")
     @OneToMany
     private List<Nota> notas;
@@ -37,6 +33,5 @@ public class Aluno {
         this.idade = alunoDTO.getIdade();
         this.altura = alunoDTO.getAltura();
         this.peso = alunoDTO.getAltura();
-        this.faixa = alunoDTO.getFaixa();
     }
 }

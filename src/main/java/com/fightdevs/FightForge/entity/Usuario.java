@@ -3,13 +3,22 @@ package com.fightdevs.FightForge.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fightdevs.FightForge.dto.UsuarioDTO;
-import com.fightdevs.FightForge.dto.UsuarioType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import com.fightdevs.FightForge.dto.TipoUsuario;
 import com.fightdevs.FightForge.security.CustomGrantedAuthority;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -45,23 +54,27 @@ public class Usuario implements UserDetails {
 
     @Column(name = "NOME")
     private String nome;
-    @Column(name = "USUARIOTYPE")
+  
+    @Column(name = "TIPOUSUARIO")
     @Enumerated(EnumType.STRING)
-    private UsuarioType role;
+    private TipoUsuario tipo;
+  
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "idAcademia")
+    private Academia academia;
 
-    public Usuario(UsuarioDTO usuario) {
-        this.email = usuario.getEmail();
-        this.senha = usuario.getSenha();
-        this.dataNascimento = usuario.getDataNascimento();
-        this.sexo = usuario.getSexo();
-        this.nome = usuario.getNome();
-        this.role = usuario.getUsuarioType();
+    public Usuario(UsuarioDTO usuarioDTO) {
+        this.email = usuarioDTO.getEmail();
+        this.senha = usuarioDTO.getSenha();
+        this.dataNascimento = usuarioDTO.getDataNascimento();
+        this.sexo = usuarioDTO.getSexo();
+        this.nome = usuarioDTO.getNome();
     }
 
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new CustomGrantedAuthority("ROLE_" + role.toString()));
+        return List.of(new CustomGrantedAuthority("ROLE_" + tipo.toString()));
     }
 
     @Override
