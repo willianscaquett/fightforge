@@ -16,7 +16,6 @@ public class AlunoBO {
     private AlunoRepository alunoRepository;
 
 
-
     public String createAluno(AlunoDTO alunoDTO) {
         alunoRepository.save(new Aluno(alunoDTO));
         return "Sucesso";

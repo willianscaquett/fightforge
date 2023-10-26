@@ -1,5 +1,6 @@
 package com.fightdevs.FightForge.business;
 
+import com.fightdevs.FightForge.dto.AlunoDTO;
 import com.fightdevs.FightForge.dto.UserTokenService;
 import com.fightdevs.FightForge.dto.UsuarioDTO;
 import com.fightdevs.FightForge.entity.Usuario;
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
+
+import java.util.List;
 
 
 /**
@@ -40,5 +43,9 @@ public class UsuarioBO {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.email(), dto.senha());
         Authentication auth = manager.authenticate(token);
         return tokenService.token((Usuario) auth.getPrincipal());
+    }
+
+    public List<AlunoDTO> listAllStudants() {
+       return (List<AlunoDTO>) usuarioRepository.findAllStudents();
     }
 }

@@ -22,5 +22,4 @@ public class UsuarioDTO{
     char sexo;
     String nome;
     UsuarioType usuarioType;
-
 }
