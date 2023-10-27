@@ -20,14 +20,16 @@ public class UsuarioController {
     @Autowired
     UsuarioBO usuarioBO;
 
-    @PostMapping
+    @PostMapping("/cadastro")
     @Operation(summary = "Atraves desse endpoint os usuarios do sistema são criados", tags = "User")
     @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<?> createUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         try {
             return ResponseEntity.ok(usuarioBO.createUsuario(usuarioDTO));
         } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
+
+            ex.printStackTrace();
+            return ResponseEntity.badRequest().body(ex);
         }
     }
 
@@ -50,6 +52,4 @@ public class UsuarioController {
             return ResponseEntity.internalServerError().body(exception.getMessage());
         }
     }
-
-
 }

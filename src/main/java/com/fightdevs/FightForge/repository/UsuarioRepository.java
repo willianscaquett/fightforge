@@ -16,10 +16,8 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    @Query(value = "SELECT * FROM USUARIO u WHERE u.usuariotype = 'ALUNO'", nativeQuery = true)
-
+    @Query(value = "SELECT * FROM USUARIO u WHERE u.tipousuario = 'ALUNO'", nativeQuery = true)
     Collection<AlunoDTO> findAllStudents();
     Usuario findByEmail(String email);
     Boolean existsByEmail(String email);
-
 }

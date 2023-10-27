@@ -1,10 +1,7 @@
 package com.fightdevs.FightForge.dto;
 
-import com.fightdevs.FightForge.entity.Nota;
-import jakarta.persistence.*;
+import com.fightdevs.FightForge.entity.Aluno;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class AlunoDTO {
@@ -12,6 +9,12 @@ public class AlunoDTO {
     private int idade;
     private double altura;
     private double peso;
-    private FaixaType faixa;
+    
+    public AlunoDTO(Aluno aluno) {
+        this.nome = aluno.getNome();
+        this.idade = aluno.getIdade();
+        this.altura = aluno.getAltura();
+        this.peso = aluno.getPeso(); 
+    }
 
 }
