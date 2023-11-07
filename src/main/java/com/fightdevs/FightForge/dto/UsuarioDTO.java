@@ -16,6 +16,7 @@ import java.util.Date;
 @Data
 
 public class UsuarioDTO{
+    Long id;
     String email;
     String senha;
     Date dataNascimento;

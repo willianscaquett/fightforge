@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 
+import java.util.List;
+
 /**
  *
  * @author Willian Scaquett
@@ -66,5 +68,8 @@ public class UsuarioBO {
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(dto.email(), dto.senha());
         Authentication auth = manager.authenticate(token);
         return tokenService.token((Usuario) auth.getPrincipal());
+    }
+    public List<Usuario> listUsuariosByAcademia(Long id) {
+        return usuarioRepository.findAllUsersByAcademia(id);
     }
 }
