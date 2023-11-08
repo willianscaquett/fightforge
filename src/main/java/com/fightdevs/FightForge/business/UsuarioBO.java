@@ -8,6 +8,7 @@ import com.fightdevs.FightForge.entity.Usuario;
 import com.fightdevs.FightForge.repository.AcademiaRepository;
 import com.fightdevs.FightForge.repository.UsuarioRepository;
 import com.fightdevs.FightForge.security.TokenService;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.security.core.Authentication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,7 +71,14 @@ public class UsuarioBO {
         Authentication auth = manager.authenticate(token);
         return tokenService.token((Usuario) auth.getPrincipal());
     }
-    public List<Usuario> listUsuariosByAcademia(Long id) {
-        return usuarioRepository.findAllUsersByAcademia(id);
+    public List<UsuarioDTO> listUsuariosByAcademia(Long id) {
+        List<Usuario> allUsersByAcademia = usuarioRepository.findAllUsersByAcademia(id);
+        List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
+        for (Usuario user : allUsersByAcademia) {
+            UsuarioDTO usuarioDTO = new UsuarioDTO(user);
+            usuarioDTOList.add(usuarioDTO);
+        }
+        return usuarioDTOList;
+
     }
 }
