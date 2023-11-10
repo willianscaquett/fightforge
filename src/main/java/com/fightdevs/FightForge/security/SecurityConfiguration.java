@@ -26,6 +26,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST,"/usuario").hasRole("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.POST,"/aluno").hasAnyRole("ADMINISTRADOR","DONOACADEMIA")
                         .requestMatchers(HttpMethod.GET,"/usuario/listUsuariosByAcademia/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/agenda").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
